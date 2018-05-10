@@ -1,14 +1,22 @@
 package io.rodrigo.agimarveltest.model.network.response
 
 import com.google.gson.annotations.SerializedName
+import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 
-data class CharacterResponseItem (
-    @SerializedName("id")
-    val id: Int = 0,
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("description")
-    val description: String?,
-    @SerializedName("thumbnail")
-    val thumbnail: Thumbnail?
-)
+data class CharacterResponseItem(
+        @SerializedName("id")
+        val id: Int = 0,
+        @SerializedName("name")
+        val name: String = "",
+        @SerializedName("description")
+        val description: String?,
+        @SerializedName("thumbnail")
+        val thumbnail: Thumbnail?
+) {
+    fun toMarvelCharacter() = MarvelCharacter(
+            id,
+            name,
+            description,
+            thumbnail?.let { "${it.path}.${it.extension}" }
+    )
+}

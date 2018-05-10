@@ -6,6 +6,11 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import io.rodrigo.agimarveltest.model.network.MarvelAPI
+import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
+import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapterImpl
+import io.rodrigo.agimarveltest.model.network.authorization.AuthorizationProviderImpl
+import io.rodrigo.agimarveltest.model.network.authorization.DefaultTimestampGenerator
+import io.rodrigo.agimarveltest.model.network.authorization.MD5HashGenerator
 import io.rodrigo.agimarveltest.model.repository.CharactersRepository
 import io.rodrigo.agimarveltest.model.repository.MarvelCharactersRepository
 import okhttp3.OkHttpClient
@@ -34,7 +39,7 @@ class AppModule {
     @Provides
     fun providesApi(gson: Gson, okHttpClient: OkHttpClient): MarvelAPI {
         return Retrofit.Builder()
-                .baseUrl("https://gateway.marvel.com:443/v1/public/")
+                .baseUrl("https://gateway.marvel.com/v1/public/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
@@ -43,7 +48,19 @@ class AppModule {
     }
 
     @Provides
-    fun providesCharactersRepository(api: MarvelAPI): CharactersRepository {
-        return MarvelCharactersRepository(api)
+    fun providesNetworkAdapter(api: MarvelAPI): NetworkAdaper {
+        val timestampGenerator = DefaultTimestampGenerator()
+        val hashGenerator = MD5HashGenerator()
+        val authorizationProvider = AuthorizationProviderImpl(
+                NetworkAdapterImpl.PUBLIC_KEY,
+                NetworkAdapterImpl.PRIVATE_KEY,
+                hashGenerator,
+                timestampGenerator)
+        return NetworkAdapterImpl(authorizationProvider, api)
+    }
+
+    @Provides
+    fun providesCharactersRepository(networkAdaper: NetworkAdaper): CharactersRepository {
+        return MarvelCharactersRepository(networkAdaper)
     }
 }

@@ -1,51 +1,46 @@
 package io.rodrigo.agimarveltest.model.repository
 
-import android.support.annotation.VisibleForTesting
-import io.reactivex.Single
-import io.rodrigo.agimarveltest.model.data.CharacterList
+import android.arch.paging.DataSource
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
+import android.arch.paging.PositionalDataSource
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
-import io.rodrigo.agimarveltest.model.hash.generateMd5
-import io.rodrigo.agimarveltest.model.network.MarvelAPI
-import io.rodrigo.agimarveltest.model.network.response.CharacterResponseItem
+import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
 import io.rodrigo.agimarveltest.model.network.response.CharactersResponse
-import java.util.*
 
 
-class MarvelCharactersRepository(private val marvelAPI: MarvelAPI) : CharactersRepository {
+class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : CharactersRepository {
 
-    companion object {
-        private const val PUBLIC_KEY = "75e79a4beb64a1a1c411439f06457bd7"
-        private const val PRIVATE_KEY = "2e3fa0ad8250ceb96b82b10eec08a5f94162db99"
+    override val characters = LivePagedListBuilder(DataSourceFactory(), PagedList.Config.Builder()
+            .setPrefetchDistance(15)
+            .setPageSize(30)
+            .build()).build()
+
+    inner class CharactersDataSource(private val networkAdapter: NetworkAdaper) : PositionalDataSource<MarvelCharacter>() {
+
+        override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<MarvelCharacter>) {
+            networkAdapter.getCharacters(params.loadSize, params.startPosition)
+                    .onErrorReturn { CharactersResponse(0, emptyList()) }
+                    .subscribe { response ->
+                        val items = response.results.map { it.toMarvelCharacter() }
+                        callback.onResult(items)
+                    }
+        }
+
+        override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<MarvelCharacter>) {
+            networkAdapter.getCharacters(params.pageSize)
+                    .onErrorReturn { CharactersResponse(0, emptyList()) }
+                    .subscribe { response ->
+                        val items = response.results.map { it.toMarvelCharacter() }
+                        if (items.isNotEmpty()) {
+                            callback.onResult(items, 0, response.total)
+                        }
+                    }
+
+        }
     }
 
-    override fun getCharacters(limit: Int, offset: Int): Single<CharacterList> {
-        val authData = getAuthenticationData()
-        return marvelAPI.getCharacters(authData.apiKey, authData.timestamp, authData.hash, limit, offset)
-                .map { convertResponse(it.data) }
+    inner class DataSourceFactory : DataSource.Factory<Int, MarvelCharacter>() {
+        override fun create(): DataSource<Int, MarvelCharacter> = CharactersDataSource(networkAdapter)
     }
-
-    @VisibleForTesting
-    fun getAuthenticationData(): AuthenticationData {
-        val timestamp = Date().time
-        val hash = generateMd5("$timestamp$PRIVATE_KEY$PUBLIC_KEY")
-        return AuthenticationData(PUBLIC_KEY, timestamp, hash)
-    }
-
-    private fun convertResponse(response: CharactersResponse): CharacterList {
-        return CharacterList(response.results.map { convertResponseItem(it) }, response.total)
-    }
-
-    @VisibleForTesting
-    fun convertResponseItem(item: CharacterResponseItem) = MarvelCharacter(
-            item.id,
-            item.name,
-            item.description,
-            item.thumbnail?.let { "${it.path}.${it.extension}" }
-    )
-
-    data class AuthenticationData(
-            val apiKey: String,
-            val timestamp: Long,
-            val hash: String
-    )
 }

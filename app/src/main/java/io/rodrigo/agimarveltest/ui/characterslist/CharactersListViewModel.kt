@@ -1,49 +1,20 @@
 package io.rodrigo.agimarveltest.ui.characterslist
 
 import android.arch.lifecycle.ViewModel
-import android.arch.paging.DataSource
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.arch.paging.PositionalDataSource
-import io.rodrigo.agimarveltest.model.data.CharacterList
+import android.support.v7.util.DiffUtil
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.repository.CharactersRepository
 import javax.inject.Inject
 
-class CharactersListViewModel @Inject constructor(private val charactersRepository: CharactersRepository) : ViewModel() {
+class CharactersListViewModel @Inject constructor(repository: CharactersRepository) : ViewModel() {
 
-    private val config = PagedList.Config.Builder()
-            .setPrefetchDistance(15)
-            .setPageSize(30)
-            .build()
+    val characters = repository.characters
 
-    val characters = LivePagedListBuilder(CharactersDataSourceFactory(), config).build()
+    val itemCallback = object : DiffUtil.ItemCallback<MarvelCharacter>() {
+        override fun areItemsTheSame(oldItem: MarvelCharacter?, newItem: MarvelCharacter?) = oldItem?.id == newItem?.id
 
+        override fun areContentsTheSame(oldItem: MarvelCharacter?, newItem: MarvelCharacter?) = oldItem == newItem
 
-    inner class CharactersDataSource : PositionalDataSource<MarvelCharacter>() {
-        override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<MarvelCharacter>) {
-            charactersRepository.getCharacters(params.loadSize, params.startPosition)
-                    .onErrorReturn { CharacterList(emptyList(), 0) }
-                    .subscribe { items ->
-                        callback.onResult(items)
-                    }
-        }
-
-        override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<MarvelCharacter>) {
-            charactersRepository.getCharacters(params.pageSize)
-                    .onErrorReturn { CharacterList(emptyList(), 0) }
-                    .subscribe { items ->
-                        if (items.isNotEmpty()) {
-                            callback.onResult(items, 0, items.total)
-                        }
-                    }
-
-        }
-
-    }
-
-    inner class CharactersDataSourceFactory : DataSource.Factory<Int, MarvelCharacter>() {
-        override fun create(): DataSource<Int, MarvelCharacter> = CharactersDataSource()
     }
 
 }

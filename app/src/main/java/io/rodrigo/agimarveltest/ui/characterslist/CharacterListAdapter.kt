@@ -14,18 +14,9 @@ import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 
 class CharacterListAdapter(
         data: LiveData<PagedList<MarvelCharacter>>,
-        lifecycleOwner: LifecycleOwner
+        lifecycleOwner: LifecycleOwner,
+        itemCallback: DiffUtil.ItemCallback<MarvelCharacter>
 ) : PagedListAdapter<MarvelCharacter, CharacterListAdapter.CharacterViewHolder>(itemCallback) {
-
-    companion object {
-        val itemCallback = object : DiffUtil.ItemCallback<MarvelCharacter>() {
-            override fun areItemsTheSame(oldItem: MarvelCharacter?, newItem: MarvelCharacter?)
-                    = oldItem?.id == newItem?.id
-
-            override fun areContentsTheSame(oldItem: MarvelCharacter?, newItem: MarvelCharacter?)
-                    = oldItem == newItem
-        }
-    }
 
     init {
         data.observe(lifecycleOwner, Observer {

@@ -28,7 +28,11 @@ class CharacterListFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(CharactersListViewModel::class.java)
 
-        val adapter = CharacterListAdapter(viewModel.characters, this)
+        val adapter = CharacterListAdapter(
+                viewModel.characters,
+                this,
+                viewModel.itemCallback
+        )
         binding.characterList.adapter = adapter
 
         return binding.root
