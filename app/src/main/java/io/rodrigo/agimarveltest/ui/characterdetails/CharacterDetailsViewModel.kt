@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.extensions.dateString
+import java.text.DateFormat
 import javax.inject.Inject
 
 class CharacterDetailsViewModel(character: MarvelCharacter) : ViewModel() {
@@ -11,7 +12,7 @@ class CharacterDetailsViewModel(character: MarvelCharacter) : ViewModel() {
     val id = character.id
     val name = character.name
     val imageUrl = character.imageUrl
-    val dateCreated = character.dateCreated?.dateString()
+    val dateCreated = character.dateCreated?.dateString(style = DateFormat.MEDIUM)
     val description = character.description
 
     class Factory @Inject constructor() : ViewModelProvider.Factory {
