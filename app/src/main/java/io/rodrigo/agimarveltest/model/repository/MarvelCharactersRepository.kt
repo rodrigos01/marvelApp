@@ -8,7 +8,6 @@ import android.arch.paging.PositionalDataSource
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.extensions.switchMap
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
-import io.rodrigo.agimarveltest.model.network.response.CharactersResponse
 import io.rodrigo.agimarveltest.ui.Listing
 
 
@@ -18,10 +17,11 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : Ch
             .setPageSize(30)
             .setPrefetchDistance(10)
             .setInitialLoadSizeHint(30)
+            .build()
     private val factory = DataSourceFactory()
 
     override val characters = Listing(
-            pagedList = LivePagedListBuilder(factory, 30).build(),
+            pagedList = LivePagedListBuilder(factory, config).build(),
             status = factory.dataSource.switchMap { it.status },
             pageSize = 30
     )
@@ -32,7 +32,6 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : Ch
 
         override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<MarvelCharacter>) {
             networkAdapter.getCharacters(params.loadSize, params.startPosition)
-                    .onErrorReturn { CharactersResponse(0, emptyList()) }
                     .subscribe { response ->
                         val items = response.results.map { it.toMarvelCharacter() }
                         callback.onResult(items)
@@ -42,7 +41,6 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : Ch
         override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<MarvelCharacter>) {
             status.postValue(Listing.Status.STATUS_LOADING)
             networkAdapter.getCharacters(params.requestedLoadSize)
-                    .onErrorReturn { CharactersResponse(0, emptyList()) }
                     .subscribe { response ->
                         val items = response.results.map { it.toMarvelCharacter() }
                         if (items.isNotEmpty()) {

@@ -43,9 +43,7 @@ class CharacterListAdapter(
             return
         }
 
-        getItem(position)?.let {
-            holder.binding.character = it
-        }
+        holder.binding.character = getItem(position)
     }
 
     override fun getItemCount(): Int {

@@ -10,10 +10,12 @@ import io.rodrigo.agimarveltest.R
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, url: String?) {
 
-    url?.let {
+    if (url != null) {
         Glide.with(view.context)
                 .load(url)
                 .into(view)
+    } else {
+        view.setImageDrawable(null)
     }
 }
 
