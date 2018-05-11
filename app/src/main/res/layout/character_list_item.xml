@@ -24,12 +24,13 @@
             android:scaleType="centerCrop"
             android:transitionName="@{character.imageUrl}"
             app:imageUrl="@{character.imageUrl}"
+            app:placeHolderObject="@{character}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -39,6 +40,7 @@
             android:text="@{character.name}"
             tools:text="Capitain Bug"
             android:textSize="16sp"
+            app:placeHolderObject="@{character}"
             app:layout_constraintBottom_toBottomOf="@+id/avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/avatar"

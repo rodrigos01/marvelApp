@@ -1,9 +1,8 @@
 package io.rodrigo.agimarveltest.model.repository
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.PagedList
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
+import io.rodrigo.agimarveltest.ui.Listing
 
 interface CharactersRepository {
-    val characters: LiveData<PagedList<MarvelCharacter>>
+    val characters: Listing<MarvelCharacter>
 }
