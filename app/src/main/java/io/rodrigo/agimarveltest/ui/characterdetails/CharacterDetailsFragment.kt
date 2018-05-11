@@ -2,7 +2,6 @@ package io.rodrigo.agimarveltest.ui.characterdetails
 
 
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -43,9 +42,6 @@ class CharacterDetailsFragment : Fragment() {
                     .get(CharacterDetailsViewModel::class.java)
 
             binding.viewModel = viewModel
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                binding.image.transitionName = viewModel.imageUrl
-            }
         }
 
         return binding.root

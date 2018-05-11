@@ -45,7 +45,7 @@ class CharacterListFragment : Fragment() {
             val bundle = Bundle()
             bundle.putParcelable(CharacterDetailsFragment.ARG_CHARACTER, it)
             Navigation.findNavController(binding.root)
-                    .navigate(R.id.characterDetailsFragment,
+                    .navigate(R.id.action_characterListFragment_to_characterDetailsFragment,
                             bundle)
         }
 

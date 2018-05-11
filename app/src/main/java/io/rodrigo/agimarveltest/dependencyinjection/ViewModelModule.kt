@@ -13,7 +13,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(CharactersListViewModel::class)
-    abstract fun bindGalleryViewModel(charactersListViewModel: CharactersListViewModel): ViewModel
+    abstract fun bindCharacterListViewModel(charactersListViewModel: CharactersListViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

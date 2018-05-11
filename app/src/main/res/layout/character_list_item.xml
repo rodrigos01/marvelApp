@@ -22,7 +22,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
-            android:transitionName="@{character.imageUrl}"
             app:imageUrl="@{character.imageUrl}"
             app:placeHolderObject="@{character}"
             app:layout_constraintBottom_toBottomOf="parent"
