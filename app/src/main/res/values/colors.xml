@@ -5,4 +5,10 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="placeholder">#DDD</color>
+
+    <color name="textColorPrimary">#DD000000</color>
+    <color name="textColorSecondary">#89000000</color>
+
+    <color name="white">@android:color/white</color>
+    <color name="transparent">@android:color/transparent</color>
 </resources>

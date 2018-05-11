@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/characterListFragment">
 
     <fragment
         android:id="@+id/characterListFragment"
         android:name="io.rodrigo.agimarveltest.ui.characterslist.CharacterListFragment"
-        android:label="CharacterListFragment" />
+        android:label="CharacterListFragment">
+        <action
+            android:id="@+id/action_characterListFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailsFragment"
+        android:name="io.rodrigo.agimarveltest.ui.characterdetails.CharacterDetailsFragment"
+        android:label="fragment_character_details"
+        tools:layout="@layout/fragment_character_details" />
 </navigation>

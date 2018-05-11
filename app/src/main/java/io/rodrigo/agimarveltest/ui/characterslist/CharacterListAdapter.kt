@@ -17,6 +17,8 @@ class CharacterListAdapter(
         itemCallback: DiffUtil.ItemCallback<MarvelCharacter>
 ) : PagedListAdapter<MarvelCharacter, CharacterListAdapter.CharacterViewHolder>(itemCallback) {
 
+    var onItemClicked: ((MarvelCharacter) -> Unit)? = null
+
     private var status: Listing.Status? = null
 
     init {
@@ -43,7 +45,14 @@ class CharacterListAdapter(
             return
         }
 
-        holder.binding.character = getItem(position)
+        val character = getItem(position)
+        holder.binding.character = character
+
+        character?.let {
+            holder.binding.root.setOnClickListener { _ ->
+                onItemClicked?.invoke(it)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,6 +1,7 @@
 package io.rodrigo.agimarveltest.dependencyinjection
 
 import dagger.Component
+import io.rodrigo.agimarveltest.ui.characterdetails.CharacterDetailsFragment
 import io.rodrigo.agimarveltest.ui.characterslist.CharacterListFragment
 import javax.inject.Singleton
 
@@ -8,4 +9,5 @@ import javax.inject.Singleton
 @Component(modules = [(AppModule::class)])
 interface AppComponent {
     fun inject(characterListFragment: CharacterListFragment)
+    fun inject(characterDetailsFragment: CharacterDetailsFragment)
 }

@@ -33,6 +33,7 @@ class AppModule {
     @Provides
     fun providesGson(): Gson {
         return GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create()
     }
 

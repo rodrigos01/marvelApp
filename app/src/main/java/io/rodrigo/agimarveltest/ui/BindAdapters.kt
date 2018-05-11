@@ -19,12 +19,21 @@ fun loadImage(view: ImageView, url: String?) {
     }
 }
 
+@BindingAdapter("visibilityObject")
+fun checkVisibility(view: View, obj: Any?) {
+    if (obj == null) {
+        view.visibility = View.GONE
+    } else {
+        view.visibility = View.VISIBLE
+    }
+}
+
 @BindingAdapter("placeHolderObject")
 fun checkPlaceHolder(view: View, obj: Any?) {
     val context = view.context
     if (obj == null) {
         view.setBackgroundColor(ContextCompat.getColor(context, R.color.placeholder))
     } else {
-        view.setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
+        view.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent))
     }
 }

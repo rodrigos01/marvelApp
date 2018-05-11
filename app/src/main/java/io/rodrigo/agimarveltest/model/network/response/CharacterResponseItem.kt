@@ -2,12 +2,15 @@ package io.rodrigo.agimarveltest.model.network.response
 
 import com.google.gson.annotations.SerializedName
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
+import java.util.*
 
 data class CharacterResponseItem(
         @SerializedName("id")
         val id: Int = 0,
         @SerializedName("name")
         val name: String = "",
+        @SerializedName("modified")
+        val dateCreated: Date?,
         @SerializedName("description")
         val description: String?,
         @SerializedName("thumbnail")
@@ -16,7 +19,8 @@ data class CharacterResponseItem(
     fun toMarvelCharacter() = MarvelCharacter(
             id,
             name,
-            description,
+            dateCreated,
+            if (description.isNullOrBlank()) null else description,
             thumbnail?.let { "${it.path}.${it.extension}" }
     )
 }
