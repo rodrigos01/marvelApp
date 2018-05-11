@@ -5,6 +5,7 @@ import android.arch.paging.DataSource
 import android.arch.paging.LivePagedListBuilder
 import android.arch.paging.PagedList
 import android.arch.paging.PositionalDataSource
+import android.support.annotation.VisibleForTesting
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.extensions.switchMap
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
@@ -18,7 +19,9 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : Ch
             .setPrefetchDistance(10)
             .setInitialLoadSizeHint(30)
             .build()
-    private val factory = DataSourceFactory()
+
+    @VisibleForTesting
+    val factory = DataSourceFactory()
 
     override val characters = Listing(
             pagedList = LivePagedListBuilder(factory, config).build(),
