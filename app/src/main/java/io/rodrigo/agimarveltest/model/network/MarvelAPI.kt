@@ -33,6 +33,10 @@ interface MarvelAPI {
             @Query("ts")
             timestamp: Long,
             @Query("hash")
-            hash: String
+            hash: String,
+            @Query("limit")
+            limit: Int = 30,
+            @Query("offset")
+            offset: Int = 0
     ): Call<ApiResponse<ItemListResponse<ComicResponseItem>>>
 }

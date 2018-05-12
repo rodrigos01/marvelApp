@@ -8,7 +8,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="character_list_error">There was an Error fetching the Characters List</string>
+    <string name="character_list_error">There was an error fetching the Character List</string>
+    <string name="comic_list_error">There was an error fetching the Comic List</string>
     <string name="retry_button_label">retry</string>
 
 </resources>

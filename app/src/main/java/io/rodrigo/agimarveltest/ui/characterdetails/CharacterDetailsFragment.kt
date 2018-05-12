@@ -44,6 +44,10 @@ class CharacterDetailsFragment : Fragment() {
 
             binding.viewModel = viewModel
 
+            binding.setLifecycleOwner(this)
+
+            binding.retryButton.setOnClickListener { viewModel.retry() }
+
             val gridAdapter = ComicGridAdapter(viewModel.comics, this)
             binding.comicList.let {
                 it.layoutManager = GridLayoutManager(context, 3)

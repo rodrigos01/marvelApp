@@ -47,13 +47,14 @@ class Promise<T>(block: (fulfill: (T) -> Unit, reject: (Throwable) -> Unit) -> U
         return this
     }
 
-    fun onError(listener: (Throwable) -> Unit) {
+    fun onError(listener: (Throwable) -> Unit): Promise<T> {
         val currentValue = error
         if (currentValue != null) {
             listener(currentValue)
         } else {
             onErrorListeners.add(listener)
         }
+        return this
     }
 
     fun <R> map(block: (T) -> (R)) = Promise<R> { fulfill, reject ->

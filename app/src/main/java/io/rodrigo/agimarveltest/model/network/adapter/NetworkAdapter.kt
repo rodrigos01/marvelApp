@@ -7,5 +7,5 @@ import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
 
 interface NetworkAdapter {
     fun getCharacters(limit: Int = 30, offset: Int = 0): Promise<ItemListResponse<CharacterResponseItem>>
-    fun getComics(characterId: Int): Promise<ItemListResponse<ComicResponseItem>>
+    fun getComics(characterId: Int, limit: Int = 30, offset: Int = 0): Promise<ItemListResponse<ComicResponseItem>>
 }

@@ -26,9 +26,9 @@ class NetworkAdapterImpl(
                 .map { it.data }
     }
 
-    override fun getComics(characterId: Int): Promise<ItemListResponse<ComicResponseItem>> {
+    override fun getComics(characterId: Int, limit: Int, offset: Int): Promise<ItemListResponse<ComicResponseItem>> {
         val authData = authorizationProvider.getAuthorizationData()
-        return marvelAPI.getCharacterComics(characterId, authData.apiKey, authData.timestamp, authData.hash)
+        return marvelAPI.getCharacterComics(characterId, authData.apiKey, authData.timestamp, authData.hash, limit, offset)
                 .promisify()
                 .map { it.data }
     }
