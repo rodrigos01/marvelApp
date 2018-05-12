@@ -5,7 +5,7 @@ import io.reactivex.Single
 import io.rodrigo.agimarveltest.model.network.MarvelAPI
 import io.rodrigo.agimarveltest.model.network.authorization.AuthorizationProvider
 import io.rodrigo.agimarveltest.model.network.response.ApiResponse
-import io.rodrigo.agimarveltest.model.network.response.CharactersResponse
+import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,7 +26,10 @@ class NetworkAdapterImplTest {
                         "supersecrethash"
                 ))
         whenever(marvelAPI.getCharacters(any(), any(), any(), any(), any()))
-                .thenReturn(Single.just(ApiResponse(CharactersResponse(0, emptyList()))))
+                .thenReturn(Single.just(ApiResponse(ItemListResponse(0, emptyList()))))
+
+        whenever(marvelAPI.getCharacterComics(any(), any(), any(), any()))
+                .thenReturn(Single.just(ApiResponse(ItemListResponse(0, emptyList()))))
     }
 
     @Test
@@ -51,6 +54,14 @@ class NetworkAdapterImplTest {
         adapter.getCharacters(offset = 30)
 
         verify(marvelAPI).getCharacters(any(), any(), any(), eq(30), eq(30))
+    }
+
+    @Test
+    fun shouldCallGetComics() {
+        val adapter = getAdapter()
+        adapter.getComics(700)
+
+        verify(marvelAPI).getCharacterComics(eq(700), any(), any(), any())
     }
 
     @Test

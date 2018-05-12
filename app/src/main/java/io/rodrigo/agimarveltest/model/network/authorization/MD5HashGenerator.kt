@@ -8,6 +8,11 @@ class MD5HashGenerator : HashGenerator {
                 .getInstance("MD5")
         digest.update(input.toByteArray(), 0, input.length)
         val messageDigest = digest.digest()
-        return BigInteger(1, messageDigest).toString(16)
+        val result = BigInteger(1, messageDigest).toString(16)
+        return if (result.length == 31) {
+            "0$result"
+        } else {
+            result
+        }
     }
 }

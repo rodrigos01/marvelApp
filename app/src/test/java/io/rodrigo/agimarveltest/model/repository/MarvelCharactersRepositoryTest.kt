@@ -7,8 +7,8 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
-import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
-import io.rodrigo.agimarveltest.model.network.response.CharactersResponse
+import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter
+import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,12 +22,12 @@ class MarvelCharactersRepositoryTest {
     @JvmField
     val rule = InstantTaskExecutorRule()
 
-    private val networkAdapter = mock<NetworkAdaper>()
+    private val networkAdapter = mock<NetworkAdapter>()
 
     @Before
     fun setup() {
         whenever(networkAdapter.getCharacters(any(), any()))
-                .thenReturn(Single.just(CharactersResponse(1000, emptyList())))
+                .thenReturn(Single.just(ItemListResponse(1000, emptyList())))
     }
 
     @Test

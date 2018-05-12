@@ -12,7 +12,7 @@ class CharacterResponseItemTest {
                 "bugman",
                 null,
                 "A Bug catcher super-hero",
-                Thumbnail(
+                ImageResponse(
                         "https://s3-media2.fl.yelpcdn.com/bphoto/IAITw8luZ0Q77qw7EpHniw/ls",
                         "jpg"
                 )

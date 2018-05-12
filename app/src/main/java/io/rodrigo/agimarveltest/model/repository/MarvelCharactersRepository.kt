@@ -8,11 +8,11 @@ import android.arch.paging.PositionalDataSource
 import android.support.annotation.VisibleForTesting
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.extensions.switchMap
-import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
+import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter
 import io.rodrigo.agimarveltest.ui.Listing
 
 
-class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : CharactersRepository {
+class MarvelCharactersRepository(private val networkAdapter: NetworkAdapter) : CharactersRepository {
 
     private val config = PagedList.Config.Builder()
             .setPageSize(30)
@@ -29,7 +29,7 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdaper) : Ch
             pageSize = 30
     )
 
-    inner class CharactersDataSource(private val networkAdapter: NetworkAdaper) : PositionalDataSource<MarvelCharacter>() {
+    inner class CharactersDataSource(private val networkAdapter: NetworkAdapter) : PositionalDataSource<MarvelCharacter>() {
 
         val status = MutableLiveData<Listing.Status>()
 

@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,13 @@ class CharacterDetailsFragment : Fragment() {
                     .get(CharacterDetailsViewModel::class.java)
 
             binding.viewModel = viewModel
+
+            val gridAdapter = ComicGridAdapter(viewModel.comics, this)
+            binding.comicList.let {
+                it.layoutManager = GridLayoutManager(context, 3)
+                it.isNestedScrollingEnabled = false
+                it.adapter = gridAdapter
+            }
         }
 
         return binding.root

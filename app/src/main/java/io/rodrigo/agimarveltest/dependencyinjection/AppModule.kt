@@ -6,13 +6,15 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.schedulers.Schedulers
 import io.rodrigo.agimarveltest.model.network.MarvelAPI
-import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdaper
+import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapterImpl
 import io.rodrigo.agimarveltest.model.network.authorization.AuthorizationProviderImpl
 import io.rodrigo.agimarveltest.model.network.authorization.DefaultTimestampGenerator
 import io.rodrigo.agimarveltest.model.network.authorization.MD5HashGenerator
 import io.rodrigo.agimarveltest.model.repository.CharactersRepository
+import io.rodrigo.agimarveltest.model.repository.ComicRepository
 import io.rodrigo.agimarveltest.model.repository.MarvelCharactersRepository
+import io.rodrigo.agimarveltest.model.repository.MarvelComicRepository
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -49,7 +51,7 @@ class AppModule {
     }
 
     @Provides
-    fun providesNetworkAdapter(api: MarvelAPI): NetworkAdaper {
+    fun providesNetworkAdapter(api: MarvelAPI): NetworkAdapter {
         val timestampGenerator = DefaultTimestampGenerator()
         val hashGenerator = MD5HashGenerator()
         val authorizationProvider = AuthorizationProviderImpl(
@@ -61,7 +63,12 @@ class AppModule {
     }
 
     @Provides
-    fun providesCharactersRepository(networkAdaper: NetworkAdaper): CharactersRepository {
-        return MarvelCharactersRepository(networkAdaper)
+    fun providesCharactersRepository(networkAdapter: NetworkAdapter): CharactersRepository {
+        return MarvelCharactersRepository(networkAdapter)
+    }
+
+    @Provides
+    fun providesComicRepository(networkAdapter: NetworkAdapter): ComicRepository {
+        return MarvelComicRepository(networkAdapter)
     }
 }

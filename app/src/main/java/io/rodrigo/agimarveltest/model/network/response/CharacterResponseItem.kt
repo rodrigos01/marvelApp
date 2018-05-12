@@ -14,13 +14,13 @@ data class CharacterResponseItem(
         @SerializedName("description")
         val description: String?,
         @SerializedName("thumbnail")
-        val thumbnail: Thumbnail?
+        val thumbnail: ImageResponse?
 ) {
     fun toMarvelCharacter() = MarvelCharacter(
             id,
             name,
             dateCreated,
             if (description.isNullOrBlank()) null else description,
-            thumbnail?.let { "${it.path}.${it.extension}" }
+            thumbnail.toString()
     )
 }

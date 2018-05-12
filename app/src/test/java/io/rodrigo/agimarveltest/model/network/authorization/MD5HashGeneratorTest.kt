@@ -7,8 +7,8 @@ class MD5HashGeneratorTest {
 
     @Test
     fun shouldGenerateMd5() {
-        val input = "392PRIVKEYPUBKEY"
-        val expected = "46f2680432bd2e9817c063cb9e4a77af"
+        val input = "15260997536442e3fa0ad8250ceb96b82b10eec08a5f94162db9975e79a4beb64a1a1c411439f06457bd7"
+        val expected = "064e7ecc53c9f1a3c051c6d11bf8601b"
 
         val generator = MD5HashGenerator()
 
