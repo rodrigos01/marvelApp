@@ -4,7 +4,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.Single
+import io.rodrigo.agimarveltest.model.Promise
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter
 import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
 import org.junit.Before
@@ -20,7 +20,7 @@ class MarvelComicRepositoryTest {
     @Before
     fun setup() {
         whenever(networkAdapter.getComics(any()))
-                .thenReturn(Single.just(ItemListResponse(0, emptyList())))
+                .thenReturn(Promise.just(ItemListResponse(0, emptyList())))
     }
 
     @Test

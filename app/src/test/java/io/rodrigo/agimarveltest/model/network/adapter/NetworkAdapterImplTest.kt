@@ -1,15 +1,17 @@
 package io.rodrigo.agimarveltest.model.network.adapter
 
 import com.nhaarman.mockito_kotlin.*
-import io.reactivex.Single
 import io.rodrigo.agimarveltest.model.network.MarvelAPI
 import io.rodrigo.agimarveltest.model.network.authorization.AuthorizationProvider
 import io.rodrigo.agimarveltest.model.network.response.ApiResponse
+import io.rodrigo.agimarveltest.model.network.response.CharacterResponseItem
+import io.rodrigo.agimarveltest.model.network.response.ComicResponseItem
 import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
+import retrofit2.Call
 
 @RunWith(MockitoJUnitRunner::class)
 class NetworkAdapterImplTest {
@@ -25,11 +27,15 @@ class NetworkAdapterImplTest {
                         392,
                         "supersecrethash"
                 ))
+
+        val charactersCall = mock<Call<ApiResponse<ItemListResponse<CharacterResponseItem>>>>()
+        val comicsCall = mock<Call<ApiResponse<ItemListResponse<ComicResponseItem>>>>()
+
         whenever(marvelAPI.getCharacters(any(), any(), any(), any(), any()))
-                .thenReturn(Single.just(ApiResponse(ItemListResponse(0, emptyList()))))
+                .thenReturn(charactersCall)
 
         whenever(marvelAPI.getCharacterComics(any(), any(), any(), any()))
-                .thenReturn(Single.just(ApiResponse(ItemListResponse(0, emptyList()))))
+                .thenReturn(comicsCall)
     }
 
     @Test

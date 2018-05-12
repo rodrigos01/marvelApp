@@ -1,10 +1,10 @@
 package io.rodrigo.agimarveltest.model.network
 
-import io.reactivex.Single
 import io.rodrigo.agimarveltest.model.network.response.ApiResponse
 import io.rodrigo.agimarveltest.model.network.response.CharacterResponseItem
 import io.rodrigo.agimarveltest.model.network.response.ComicResponseItem
 import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
+import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -22,7 +22,7 @@ interface MarvelAPI {
             limit: Int = 30,
             @Query("offset")
             offset: Int = 0
-    ): Single<ApiResponse<ItemListResponse<CharacterResponseItem>>>
+    ): Call<ApiResponse<ItemListResponse<CharacterResponseItem>>>
 
     @GET("characters/{characterId}/comics")
     fun getCharacterComics(
@@ -34,5 +34,5 @@ interface MarvelAPI {
             timestamp: Long,
             @Query("hash")
             hash: String
-    ): Single<ApiResponse<ItemListResponse<ComicResponseItem>>>
+    ): Call<ApiResponse<ItemListResponse<ComicResponseItem>>>
 }

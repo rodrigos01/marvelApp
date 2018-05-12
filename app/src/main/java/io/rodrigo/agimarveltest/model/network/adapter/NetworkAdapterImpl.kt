@@ -1,6 +1,7 @@
 package io.rodrigo.agimarveltest.model.network.adapter
 
-import io.reactivex.Single
+import io.rodrigo.agimarveltest.model.Promise
+import io.rodrigo.agimarveltest.model.extensions.promisify
 import io.rodrigo.agimarveltest.model.network.MarvelAPI
 import io.rodrigo.agimarveltest.model.network.authorization.AuthorizationProvider
 import io.rodrigo.agimarveltest.model.network.response.CharacterResponseItem
@@ -18,15 +19,17 @@ class NetworkAdapterImpl(
         const val PRIVATE_KEY = "2e3fa0ad8250ceb96b82b10eec08a5f94162db99"
     }
 
-    override fun getCharacters(limit: Int, offset: Int): Single<ItemListResponse<CharacterResponseItem>> {
+    override fun getCharacters(limit: Int, offset: Int): Promise<ItemListResponse<CharacterResponseItem>> {
         val authData = authorizationProvider.getAuthorizationData()
         return marvelAPI.getCharacters(authData.apiKey, authData.timestamp, authData.hash, limit, offset)
+                .promisify()
                 .map { it.data }
     }
 
-    override fun getComics(characterId: Int): Single<ItemListResponse<ComicResponseItem>> {
+    override fun getComics(characterId: Int): Promise<ItemListResponse<ComicResponseItem>> {
         val authData = authorizationProvider.getAuthorizationData()
         return marvelAPI.getCharacterComics(characterId, authData.apiKey, authData.timestamp, authData.hash)
+                .promisify()
                 .map { it.data }
     }
 }

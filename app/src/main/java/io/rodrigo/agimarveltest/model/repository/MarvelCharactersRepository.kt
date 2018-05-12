@@ -35,7 +35,7 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdapter) : C
 
         override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<MarvelCharacter>) {
             networkAdapter.getCharacters(params.loadSize, params.startPosition)
-                    .subscribe { response ->
+                    .onSuccess { response ->
                         val items = response.results.map { it.toMarvelCharacter() }
                         callback.onResult(items)
                     }
@@ -44,12 +44,15 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdapter) : C
         override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<MarvelCharacter>) {
             status.postValue(Listing.Status.STATUS_LOADING)
             networkAdapter.getCharacters(params.requestedLoadSize)
-                    .subscribe { response ->
+                    .onSuccess { response ->
                         val items = response.results.map { it.toMarvelCharacter() }
                         if (items.isNotEmpty()) {
                             status.postValue(Listing.Status.STATUS_INITIALIZED)
                             callback.onResult(items, 0, response.total)
                         }
+                    }
+                    .onError {
+                        status.postValue(Listing.Status.STATUS_INITIALIZED)
                     }
 
         }

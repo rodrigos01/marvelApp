@@ -6,7 +6,7 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.Single
+import io.rodrigo.agimarveltest.model.Promise
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter
 import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
 import org.junit.Before
@@ -27,7 +27,7 @@ class MarvelCharactersRepositoryTest {
     @Before
     fun setup() {
         whenever(networkAdapter.getCharacters(any(), any()))
-                .thenReturn(Single.just(ItemListResponse(1000, emptyList())))
+                .thenReturn(Promise.just(ItemListResponse(1000, emptyList())))
     }
 
     @Test

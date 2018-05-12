@@ -3,7 +3,7 @@ package io.rodrigo.agimarveltest.ui.characterdetails
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.Single
+import io.rodrigo.agimarveltest.model.Promise
 import io.rodrigo.agimarveltest.model.data.Comic
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.repository.ComicRepository
@@ -44,7 +44,7 @@ class CharacterDetailsViewModelTest {
     fun setup() {
         Locale.setDefault(Locale("en", "US"))
         whenever(comicRepository.getComics(700))
-                .thenReturn(Single.just(listOf(infinityGauntlet)))
+                .thenReturn(Promise.just(listOf(infinityGauntlet)))
     }
 
     @Test
