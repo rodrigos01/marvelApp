@@ -28,6 +28,15 @@ fun checkVisibility(view: View, obj: Any?) {
     }
 }
 
+@BindingAdapter("visible")
+fun booleanVisibility(view: View, visible: Boolean) {
+    if (visible) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+    }
+}
+
 @BindingAdapter("placeHolderObject")
 fun checkPlaceHolder(view: View, obj: Any?) {
     val context = view.context

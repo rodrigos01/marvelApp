@@ -26,6 +26,9 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdapter) : C
     override val characters = Listing(
             pagedList = LivePagedListBuilder(factory, config).build(),
             status = factory.dataSource.switchMap { it.status },
+            refresh = {
+                factory.dataSource.value?.invalidate()
+            },
             pageSize = 30
     )
 
@@ -52,7 +55,7 @@ class MarvelCharactersRepository(private val networkAdapter: NetworkAdapter) : C
                         }
                     }
                     .onError {
-                        status.postValue(Listing.Status.STATUS_INITIALIZED)
+                        status.postValue(Listing.Status.STATUS_ERROR)
                     }
 
         }

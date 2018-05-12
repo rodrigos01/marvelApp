@@ -34,6 +34,13 @@ class CharacterListFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(CharactersListViewModel::class.java)
 
+        binding.setLifecycleOwner(this)
+        binding.viewModel = viewModel
+
+        binding.retryButton.setOnClickListener {
+            viewModel.retry()
+        }
+
         val adapter = CharacterListAdapter(
                 viewModel.characters,
                 this,
