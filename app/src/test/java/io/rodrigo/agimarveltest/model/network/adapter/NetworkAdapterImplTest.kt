@@ -34,7 +34,7 @@ class NetworkAdapterImplTest {
         whenever(marvelAPI.getCharacters(any(), any(), any(), any(), any()))
                 .thenReturn(charactersCall)
 
-        whenever(marvelAPI.getCharacterComics(any(), any(), any(), any()))
+        whenever(marvelAPI.getCharacterComics(any(), any(), any(), any(), any(), any()))
                 .thenReturn(comicsCall)
     }
 
@@ -67,7 +67,7 @@ class NetworkAdapterImplTest {
         val adapter = getAdapter()
         adapter.getComics(700)
 
-        verify(marvelAPI).getCharacterComics(eq(700), any(), any(), any())
+        verify(marvelAPI).getCharacterComics(eq(700), any(), any(), any(), any(), any())
     }
 
     @Test

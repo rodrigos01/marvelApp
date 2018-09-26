@@ -1,9 +1,14 @@
 package io.rodrigo.agimarveltest.ui.characterslist
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.repository.CharactersRepository
+import io.rodrigo.agimarveltest.ui.Listing
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
@@ -11,7 +16,23 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CharactersListViewModelTest {
 
+    @Rule
+    @JvmField
+    val rule = InstantTaskExecutorRule()
+
     private val repository = mock<CharactersRepository>()
+    private val characters = Listing<MarvelCharacter>(
+            pagedList = mock(),
+            pageSize = 10,
+            status = mock(),
+            refresh = {}
+    )
+
+
+    @Before
+    fun setup() {
+        whenever(repository.characters).thenReturn(characters)
+    }
 
     @Test
     fun charactersShouldBeRepositoryCharacters() {

@@ -12,7 +12,7 @@ class CharactersListViewModel @Inject constructor(repository: CharactersReposito
 
     val characters = repository.characters
 
-    val error = repository.characters.status.map { it == Listing.Status.STATUS_ERROR }
+    val error = characters.status.map { it == Listing.Status.STATUS_ERROR }
 
     fun retry() {
         characters.refresh()

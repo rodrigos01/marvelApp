@@ -1,9 +1,6 @@
 package io.rodrigo.agimarveltest.model.repository
 
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockito_kotlin.*
 import io.rodrigo.agimarveltest.model.Promise
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter
 import io.rodrigo.agimarveltest.model.network.response.ItemListResponse
@@ -19,7 +16,7 @@ class MarvelComicRepositoryTest {
 
     @Before
     fun setup() {
-        whenever(networkAdapter.getComics(any()))
+        whenever(networkAdapter.getComics(any(), any(), any()))
                 .thenReturn(Promise.just(ItemListResponse(0, emptyList())))
     }
 
@@ -29,7 +26,7 @@ class MarvelComicRepositoryTest {
 
         repository.getComics(700)
 
-        verify(networkAdapter).getComics(700)
+        verify(networkAdapter).getComics(eq(700), any(), any())
     }
 
 }
