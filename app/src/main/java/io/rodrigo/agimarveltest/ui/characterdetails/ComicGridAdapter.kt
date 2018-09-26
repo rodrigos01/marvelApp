@@ -1,12 +1,12 @@
 package io.rodrigo.agimarveltest.ui.characterdetails
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import android.support.v7.recyclerview.extensions.ListAdapter
-import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import io.rodrigo.agimarveltest.databinding.ComicGridItemBinding
 import io.rodrigo.agimarveltest.model.data.Comic
 import io.rodrigo.agimarveltest.ui.BindingViewHolder
@@ -16,8 +16,8 @@ class ComicGridAdapter(
         lifecycleOwner: LifecycleOwner
 ) : ListAdapter<Comic, BindingViewHolder<ComicGridItemBinding>>(
         object : DiffUtil.ItemCallback<Comic>() {
-            override fun areItemsTheSame(oldItem: Comic?, newItem: Comic?) = oldItem?.id == newItem?.id
-            override fun areContentsTheSame(oldItem: Comic?, newItem: Comic?) = oldItem == newItem
+            override fun areItemsTheSame(oldItem: Comic, newItem: Comic) = oldItem.id == newItem.id
+            override fun areContentsTheSame(oldItem: Comic, newItem: Comic) = oldItem == newItem
         }
 ) {
 

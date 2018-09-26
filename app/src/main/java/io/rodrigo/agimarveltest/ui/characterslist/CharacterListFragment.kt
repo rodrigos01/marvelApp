@@ -1,14 +1,17 @@
 package io.rodrigo.agimarveltest.ui.characterslist
 
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.FragmentNavigator
 import io.rodrigo.agimarveltest.MarvelApplication
 import io.rodrigo.agimarveltest.R
 import io.rodrigo.agimarveltest.databinding.FragmentCharacterListBinding
@@ -23,6 +26,7 @@ class CharacterListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        postponeEnterTransition()
 
         (activity?.application as? MarvelApplication)
                 ?.component?.inject(this)
@@ -47,16 +51,30 @@ class CharacterListFragment : Fragment() {
                 viewModel.itemCallback
         )
 
-        adapter.onItemClicked = {
+        adapter.onItemClicked = { character, view ->
 
             val bundle = Bundle()
-            bundle.putParcelable(CharacterDetailsFragment.ARG_CHARACTER, it)
+            bundle.putParcelable(CharacterDetailsFragment.ARG_CHARACTER, character)
+
+            val extras = FragmentNavigator.Extras.Builder()
+                    .addSharedElement(view, ViewCompat.getTransitionName(view) ?: "")
+                    .build()
+
             Navigation.findNavController(binding.root)
                     .navigate(R.id.action_characterListFragment_to_characterDetailsFragment,
-                            bundle)
+                            bundle,
+                            null,
+                            extras)
         }
 
         binding.characterList.adapter = adapter
+
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                startPostponedEnterTransition()
+                binding.root.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
 
         return binding.root
     }

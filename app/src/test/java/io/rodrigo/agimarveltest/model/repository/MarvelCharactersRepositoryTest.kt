@@ -1,7 +1,7 @@
 package io.rodrigo.agimarveltest.model.repository
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
-import android.arch.paging.PositionalDataSource
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.paging.PositionalDataSource
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

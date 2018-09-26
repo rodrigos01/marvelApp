@@ -1,11 +1,13 @@
 package io.rodrigo.agimarveltest.ui.characterslist
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.Observer
-import android.arch.paging.PagedListAdapter
-import android.support.v7.util.DiffUtil
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import io.rodrigo.agimarveltest.databinding.CharacterListItemBinding
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.ui.BindingViewHolder
@@ -17,7 +19,7 @@ class CharacterListAdapter(
         itemCallback: DiffUtil.ItemCallback<MarvelCharacter>
 ) : PagedListAdapter<MarvelCharacter, BindingViewHolder<CharacterListItemBinding>>(itemCallback) {
 
-    var onItemClicked: ((MarvelCharacter) -> Unit)? = null
+    var onItemClicked: ((MarvelCharacter, View) -> Unit)? = null
 
     private var status: Listing.Status? = null
 
@@ -48,9 +50,11 @@ class CharacterListAdapter(
         val character = getItem(position)
         holder.binding.character = character
 
+        ViewCompat.setTransitionName(holder.binding.avatar, character?.id.toString())
+
         character?.let {
             holder.binding.root.setOnClickListener { _ ->
-                onItemClicked?.invoke(it)
+                onItemClicked?.invoke(it, holder.binding.avatar)
             }
         }
     }

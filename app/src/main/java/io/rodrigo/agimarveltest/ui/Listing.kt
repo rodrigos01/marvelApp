@@ -1,7 +1,7 @@
 package io.rodrigo.agimarveltest.ui
 
-import android.arch.lifecycle.LiveData
-import android.arch.paging.PagedList
+import androidx.lifecycle.LiveData
+import androidx.paging.PagedList
 
 data class Listing<T>(
         val pagedList: LiveData<PagedList<T>>,

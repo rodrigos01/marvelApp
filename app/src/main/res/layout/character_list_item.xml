@@ -9,7 +9,7 @@
             type="io.rodrigo.agimarveltest.model.data.MarvelCharacter" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,16 +17,16 @@
             android:id="@+id/avatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:scaleType="centerCrop"
             app:imageUrl="@{character.imageUrl}"
-            app:placeHolderObject="@{character}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeHolderObject="@{character}"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/name"
@@ -45,5 +45,5 @@
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="@+id/avatar" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

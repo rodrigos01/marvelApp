@@ -1,11 +1,11 @@
 package io.rodrigo.agimarveltest.model.repository
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.paging.DataSource
-import android.arch.paging.LivePagedListBuilder
-import android.arch.paging.PagedList
-import android.arch.paging.PositionalDataSource
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
+import androidx.paging.PositionalDataSource
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import io.rodrigo.agimarveltest.model.extensions.switchMap
 import io.rodrigo.agimarveltest.model.network.adapter.NetworkAdapter

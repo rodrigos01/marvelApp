@@ -1,15 +1,18 @@
 package io.rodrigo.agimarveltest.ui.characterdetails
 
 
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.transition.TransitionInflater
 import io.rodrigo.agimarveltest.MarvelApplication
+import io.rodrigo.agimarveltest.R
 import io.rodrigo.agimarveltest.databinding.FragmentCharacterDetailsBinding
 import io.rodrigo.agimarveltest.model.data.MarvelCharacter
 import javax.inject.Inject
@@ -22,6 +25,12 @@ class CharacterDetailsFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: CharacterDetailsViewModel.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition = TransitionInflater.from(context)
+                .inflateTransition(R.transition.default_transition)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,8 +52,9 @@ class CharacterDetailsFragment : Fragment() {
                     .get(CharacterDetailsViewModel::class.java)
 
             binding.viewModel = viewModel
-
             binding.setLifecycleOwner(this)
+
+            ViewCompat.setTransitionName(binding.image, viewModel.id.toString())
 
             binding.retryButton.setOnClickListener { viewModel.retry() }
 

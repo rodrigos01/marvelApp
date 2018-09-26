@@ -10,16 +10,17 @@
             type="io.rodrigo.agimarveltest.ui.characterdetails.CharacterDetailsViewModel" />
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.characterdetails.CharacterDetailsFragment">
 
-        <android.support.design.widget.AppBarLayout
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.design.widget.CollapsingToolbarLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 app:expandedTitleTextAppearance="@style/TextAppearance.Toolbar.Title"
                 app:collapsedTitleTextAppearance="@style/TextAppearance.Toolbar.Title"
@@ -28,25 +29,16 @@
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
                 android:layout_height="wrap_content">
 
-                <android.support.constraint.ConstraintLayout
+                <ImageView
+                    android:id="@+id/image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="182dp"
+                    android:scaleType="centerCrop"
+                    app:imageUrl="@{viewModel.imageUrl}"
                     android:foreground="@drawable/text_protection"
-                    app:layout_collapseMode="parallax">
+                    app:layout_collapseMode="parallax" />
 
-                    <ImageView
-                        android:id="@+id/image"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:scaleType="centerCrop"
-                        app:imageUrl="@{viewModel.imageUrl}"
-                        app:layout_constraintDimensionRatio="h,16:9"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </android.support.constraint.ConstraintLayout>
-
-                <android.support.v7.widget.Toolbar
+                <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
@@ -55,16 +47,16 @@
                     app:title="@{viewModel.name}"
                     app:layout_scrollFlags="scroll|enterAlways" />
 
-            </android.support.design.widget.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -176,7 +168,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/description"
                     tools:visibility="gone" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/comic_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -194,9 +186,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/comics_link"
                     tools:listitem="@layout/comic_grid_item" />
 
-            </android.support.constraint.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,9 +1,9 @@
 package io.rodrigo.agimarveltest.ui
 
-import android.databinding.BindingAdapter
-import android.support.v4.content.ContextCompat
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
+import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import io.rodrigo.agimarveltest.R
 
@@ -12,7 +12,7 @@ fun loadImage(view: ImageView, url: String?) {
 
     if (url != null) {
         Glide.with(view.context)
-                .load(url)
+                .load(url.replace("http://", "https://", true))
                 .into(view)
     } else {
         view.setImageDrawable(null)

@@ -1,6 +1,6 @@
 package io.rodrigo.agimarveltest.model
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import java.util.*
 
 class Promise<T>(block: (fulfill: (T) -> Unit, reject: (Throwable) -> Unit) -> Unit) {
